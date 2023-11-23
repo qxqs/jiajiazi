@@ -5,7 +5,7 @@
       <h3 class="img-title">{{ data.title }}</h3>
     </div>
     <div class="back" @click.stop="handleClick">
-      <p>{{ data.desc }}</p>
+      <p v-html="data.desc"></p>
     </div>
   </figure>
 </template>
@@ -27,34 +27,34 @@ const props = defineProps({
   }
 })
 const figureClassName = ref("img-figure")
-const emit = defineEmits(['reverse','center'])
+const emit = defineEmits(['reverse', 'center'])
 const handleClick = () => {
-  if(props.arrange.isCenter){
-      emit('reverse')
-    }else{
-      emit('center')
-    }
+  if (props.arrange.isCenter) {
+    emit('reverse')
+  } else {
+    emit('center')
+  }
 }
 const styleObj = ref<any>({
-  left:0,
-  top:0,
-  right:0,
-  bottom:0,
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
 })
-watch(()=>props.arrange,(value)=>{
-  if(value.pos){
+watch(() => props.arrange, (value) => {
+  if (value.pos) {
     styleObj.value = value.pos
   }
-  if(value.rotate){
-    Object.assign(styleObj.value,{transform:`rotate(${value.rotate}deg)`})
+  if (value.rotate) {
+    Object.assign(styleObj.value, { transform: `rotate(${value.rotate}deg)` })
   }
-  if(value.isCenter){
-    Object.assign(styleObj.value,{zIndex:11})
+  if (value.isCenter) {
+    Object.assign(styleObj.value, { zIndex: 11 })
   }
   figureClassName.value = props.arrange.isReverse ? 'img-figure is-reverse' : 'img-figure'
-  
+
 },
-{immediate:true,deep:true}
+  { immediate: true, deep: true }
 )
 </script>
 

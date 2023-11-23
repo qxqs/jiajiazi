@@ -6,7 +6,7 @@
         @center="reArrangFigure(index)" />
     </div>
     <img class="bg-img scale" :src="oldBgImgUrl" />
-    <img class="bg-img" :class="bgImgUrl?'scale':''" :src="bgImgUrl" />
+    <img class="bg-img" :class="bgImgUrl ? 'scale' : ''" :src="bgImgUrl" />
     <!-- <nav class="img-nav">
       <controller v-for="(arrange, index) in defaultFigureArrangeArr" :key="index" :arrange="arrange"
         @reverse="reverseFigure(index)" @center="putFigureCenter(index)" />
@@ -95,7 +95,7 @@ const reArrangFigure = (centerIndex: number) => {
   let topArrNum = Math.floor(Math.random() * 2)// 上部图片数量 0~1
   let topIndex = Math.floor(Math.random() * (figureArrangeArr.length - topArrNum)) // 上部图片起始 index
   let figureTopArr = figureArrangeArr.splice(topIndex, topArrNum)
-  let imgList = figureTopArr.length?figureTopArr:ImgInfos
+  let imgList = figureTopArr.length ? figureTopArr : ImgInfos
   imgList.forEach((img: string, index: number) => {
     figureTopArr[index] = {
       pos: {
@@ -108,9 +108,10 @@ const reArrangFigure = (centerIndex: number) => {
     }
   })
   // 左右两边图片
-  let figureList = figureArrangeArr.length?figureArrangeArr:ImgInfos
+  let figureList = figureArrangeArr.length ? figureArrangeArr : ImgInfos
+  figureList = figureList.sort(() => Math.random() - 0.5)
   for (let i = 0, j = figureList.length, k = j / 2; i < j; i++) {
-    if (i%2) {
+    if (i % 2) {
       figureArrangeArr[i] = {
         ...figureArrangeArr[i],
         pos: {
@@ -161,8 +162,8 @@ onMounted(() => {
       top: sizeSetPX(halfStageHeight - halfFigureHeight)
     },
     horizontalRange: {
-      leftSectionX: [0, halfFigureWidth],
-      rightSectionX: [halfFigureWidth, 0],
+      leftSectionX: [0, halfFigureWidth * (3 / 2)],
+      rightSectionX: [halfFigureWidth * (3 / 2), 0],
       y: [-halfFigureHeight, stageHeight - halfFigureHeight]
     },
     verticalRange: {
@@ -173,28 +174,31 @@ onMounted(() => {
   reArrangFigure(0)
 })
 
-const sizeSetPX = (number:number)=>{
-  if(!number){
+const sizeSetPX = (number: number) => {
+  if (!number) {
     return number
   }
-  return number+'px'
+  return number + 'px'
 }
 </script>
 
 <style scoped lang="less">
 @import url('./gallery.less');
 
-.bg-img{
+.bg-img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
-  transform: scale(.5);
+  transform: scale(.1);
   opacity: 0;
+  overflow: hidden;
+  object-fit: cover;
 }
-.scale{
+
+.scale {
   z-index: 0;
   opacity: 1;
   transform: scale(1);
