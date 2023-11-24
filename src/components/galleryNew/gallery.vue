@@ -7,10 +7,10 @@
     </div>
     <img class="bg-img scale" :src="oldBgImgUrl" />
     <img class="bg-img" :class="bgImgUrl ? 'scale' : ''" :src="bgImgUrl" />
-    <!-- <nav class="img-nav">
-      <controller v-for="(arrange, index) in defaultFigureArrangeArr" :key="index" :arrange="arrange"
-        @reverse="reverseFigure(index)" @center="putFigureCenter(index)" />
-    </nav> -->
+    <nav class="img-nav">
+      <controller v-for="(arrange, index) in ImgInfos" :key="index" :arrange="defaultFigureArrangeArr[index]"
+        @reverse="reverseFigure(index)" @center="reArrangFigure(index)" />
+    </nav>
   </div>
 </template>
 

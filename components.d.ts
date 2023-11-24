@@ -10,6 +10,7 @@ declare module 'vue' {
     AInput: typeof import('ant-design-vue/es')['Input']
     AMenu: typeof import('ant-design-vue/es')['Menu']
     Components: typeof import('./src/components/index.vue')['default']
+    Controller: typeof import('./src/components/galleryNew/controller.vue')['default']
     Gallery: typeof import('./src/components/galleryNew/gallery.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Image: typeof import('./src/components/galleryNew/image.vue')['default']
