@@ -18,6 +18,19 @@
 import ImgsData from './imgsdata.json'
 import MyImage from './image.vue';
 import { ref, onMounted, watch, nextTick } from 'vue'
+const props = defineProps({
+  /* 是否自动切换 */
+  autoplay:{
+    type:Boolean,
+    default:false
+  },
+  /* 自动切换间隔时长 单位毫秒 */
+  toggleTime:{
+    type:Number,
+    default:1000
+  }
+
+})
 let stageRef = ref()
 //初始化 figure 的位置
 let defaultConstantPos = ref<any>({
@@ -99,8 +112,8 @@ const reArrangFigure = (centerIndex: number) => {
   imgList.forEach((img: string, index: number) => {
     figureTopArr[index] = {
       pos: {
-        left: sizeSetPX(getRandom(verticalRange.x[0], verticalRange.x[1])),
-        top: sizeSetPX(getRandom(verticalRange.topSectionY[0], verticalRange.topSectionY[1]))
+        left: getRandom(verticalRange.x[0], verticalRange.x[1]),
+        top: getRandom(verticalRange.topSectionY[0], verticalRange.topSectionY[1])
       },
       rotate: getRandomDeg(),
       isReverse: false,
@@ -109,22 +122,21 @@ const reArrangFigure = (centerIndex: number) => {
   })
   // 左右两边图片
   let figureList = figureArrangeArr.length ? figureArrangeArr : ImgInfos
-  figureList = figureList.sort(() => Math.random() - 0.5)
-  for (let i = 0, j = figureList.length, k = j / 2; i < j; i++) {
+  for (let i = 0; i < figureList.length; i++) {
     if (i % 2) {
       figureArrangeArr[i] = {
         ...figureArrangeArr[i],
         pos: {
-          left: sizeSetPX(getRandom(leftSectionX[0], leftSectionX[1])),
-          bottom: sizeSetPX(getRandom(horizontalRange.y[0], horizontalRange.y[1]))
+          left: getRandom(leftSectionX[0], leftSectionX[1]),
+          top: getRandom(horizontalRange.y[0], horizontalRange.y[1])
         },
       }
     } else {
       figureArrangeArr[i] = {
         ...figureArrangeArr[i],
         pos: {
-          right: sizeSetPX(getRandom(rightSectionX[0], rightSectionX[1])),
-          bottom: sizeSetPX(getRandom(horizontalRange.y[0], horizontalRange.y[1]))
+          left: getRandom(rightSectionX[0], rightSectionX[1]),
+          top: getRandom(horizontalRange.y[0], horizontalRange.y[1])
         },
       }
     }
@@ -158,12 +170,12 @@ onMounted(() => {
   defaultConstantPos.value = {
     // 中心 figure 位置
     centerPos: {
-      left: sizeSetPX(halfStageWidth - halfFigureWidth),
-      top: sizeSetPX(halfStageHeight - halfFigureHeight)
+      left: halfStageWidth - halfFigureWidth,
+      top: halfStageHeight - halfFigureHeight
     },
     horizontalRange: {
       leftSectionX: [0, halfFigureWidth * (3 / 2)],
-      rightSectionX: [halfFigureWidth * (3 / 2), 0],
+      rightSectionX: [stageWidth / 2 , stageWidth-(figure.scrollWidth/2)],
       y: [-halfFigureHeight, stageHeight - halfFigureHeight]
     },
     verticalRange: {
@@ -173,13 +185,20 @@ onMounted(() => {
   }
   reArrangFigure(0)
 })
-
-const sizeSetPX = (number: number) => {
-  if (!number) {
-    return number
-  }
-  return number + 'px'
+// 是否自动切换
+const autorunFn = (index:number)=>{
+  setTimeout(() => {
+    reArrangFigure(index)
+    index = index >= ImgInfos.length-1 ? 0 : ++index
+    autorunFn(index)
+  }, props.toggleTime);
 }
+watch(()=>props.autoplay,(value)=>{
+  if(value){
+    autorunFn(1)
+  }
+})
+
 </script>
 
 <style scoped lang="less">

@@ -4,10 +4,10 @@
  * @Autor: zhuokunhao
  * @Date: 2023-11-22 16:49:03
  * @LastEditors: zhuokunhao
- * @LastEditTime: 2023-11-23 18:23:41
+ * @LastEditTime: 2023-11-25 11:12:01
 -->
 <template>
-  <gallery></gallery>
+  <gallery :autoplay="false"></gallery>
 </template>
 
 <script lang='ts' setup>

@@ -35,23 +35,25 @@ const handleClick = () => {
     emit('center')
   }
 }
-const styleObj = ref<any>({
-  left: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
-})
+const styleObj = ref<any>({})
 watch(() => props.arrange, (value) => {
+  console.log(`value：`, value)
   if (value.pos) {
-    styleObj.value = value.pos
+    if(value.pos.left==0||value.pos.left){
+      styleObj.value = Object.assign(styleObj.value, { left: value.pos.left + 'px'})
+    }
+    if(value.pos.top==0||value.pos.top){
+      styleObj.value = Object.assign(styleObj.value, { top: value.pos.top + 'px'})
+    }
   }
   if (value.rotate) {
-    Object.assign(styleObj.value, { transform: `rotate(${value.rotate}deg)` })
+    styleObj.value =  Object.assign(styleObj.value, { transform: `rotate(${value.rotate}deg)` })
   }
   if (value.isCenter) {
-    Object.assign(styleObj.value, { zIndex: 11 })
+    styleObj.value = Object.assign(styleObj.value, { zIndex: 11,transform: `rotate(0deg)` })
   }
-  figureClassName.value = props.arrange.isReverse ? 'img-figure is-reverse' : 'img-figure'
+  figureClassName.value = value.isReverse ? 'img-figure is-reverse' : 'img-figure'
+  console.log(`figureClassName.value：`, figureClassName.value)
 
 },
   { immediate: true, deep: true }
