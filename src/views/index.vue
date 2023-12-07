@@ -4,7 +4,7 @@
  * @Autor: zhuokunhao
  * @Date: 2023-11-22 16:59:48
  * @LastEditors: zhuokunhao
- * @LastEditTime: 2023-11-23 16:21:30
+ * @LastEditTime: 2023-12-05 18:29:16
 -->
 <template>
   <div class="page">
@@ -20,7 +20,9 @@
     </a-input>
       <a-menu v-model:selectedKeys="current" mode="horizontal" :items="items2" @select="handleClick" />
     </div>
-    <RouterView></RouterView>
+    <div class="page-in">
+      <RouterView></RouterView>
+    </div>
   </div>
 </template>
 
@@ -47,8 +49,8 @@ const items = ref<any>([
   {
     key: '/intro',
     icon: () => h(FileTextOutlined),
-    label: '佳佳子简介',
-    title: '佳佳子简介',
+    label: '佳佳子专属',
+    title: '佳佳子专属',
   },
 ]);
 const items2 = ref<any>([
@@ -78,7 +80,7 @@ const handleClick = (menu:any)=>{
 }
 watch(()=>route,(val)=>{
   current.value = [val.path]
-},{deep:true})
+},{deep:true,immediate:true})
 
 
 const userName = ref()
@@ -113,6 +115,6 @@ const userName = ref()
   }
 }
 .page-in{
-  height: calc(100% - 40px);
+  height:100%;
 }
 </style>

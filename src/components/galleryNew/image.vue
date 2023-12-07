@@ -37,7 +37,6 @@ const handleClick = () => {
 }
 const styleObj = ref<any>({})
 watch(() => props.arrange, (value) => {
-  console.log(`value：`, value)
   if (value.pos) {
     if(value.pos.left==0||value.pos.left){
       styleObj.value = Object.assign(styleObj.value, { left: value.pos.left + 'px'})
@@ -53,7 +52,6 @@ watch(() => props.arrange, (value) => {
     styleObj.value = Object.assign(styleObj.value, { zIndex: 11,transform: `rotate(0deg)` })
   }
   figureClassName.value = value.isReverse ? 'img-figure is-reverse' : 'img-figure'
-  console.log(`figureClassName.value：`, figureClassName.value)
 
 },
   { immediate: true, deep: true }
