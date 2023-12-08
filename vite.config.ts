@@ -16,6 +16,7 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./",
   // 开发配置
   plugins: [
     vue(),
