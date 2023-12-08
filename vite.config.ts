@@ -44,7 +44,7 @@ export default defineConfig({
   },
   // 打包配置
   build: {
-    outDir: "baseEdition",
+    outDir: "dist",
     target: "esnext",
     minify: "terser", // 混淆器，terser 构建后文件体积更小，'terser' | 'esbuild'
     chunkSizeWarningLimit: 1500, //chunk 大小警告的限制，默认500KB
